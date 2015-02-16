@@ -28,7 +28,7 @@ def setup_env():
     env.venv_root = env.user_home + "/Env/"
 
 
-def nginx_install_from_source():
+def nginx_with_ps_install_from_source():
     # remove and apt-get installs
     sudo("apt-get -y remove nginx")
     sudo("apt-get -y autoremove")
@@ -70,7 +70,7 @@ def nginx_install_from_source():
             sudo("make install")
         nginx_configure_from_source()
         # restart
-        sudo("service nginx restart")
+        nginx_restart()
 
     install()
 
@@ -110,3 +110,8 @@ def nginx_restart():
 
 def pagespeed_flush_cache():
     sudo("rm -rf %s/*" % env.pagespeed_cache)
+
+
+def deploy():
+    setup_env()
+    nginx_with_ps_install_from_source()
